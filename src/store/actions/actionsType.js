@@ -1,0 +1,2 @@
+
+export const ADD_NEW_CONTACTS = 'ADD_NEW_CONTACTS';
