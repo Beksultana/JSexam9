@@ -6,3 +6,20 @@
     flex-direction: row;
     justify-content: space-between;
 }
+.ContactsItemDiv {
+    box-shadow: 2px 2px 8px #ccc;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ContactsItemDiv h3 {
+    margin: 0 30px 0 0;
+}
+.showContacts {
+    display: flex;
+    justify-content: space-around;
+    margin: 40px 0 0 0;
+}

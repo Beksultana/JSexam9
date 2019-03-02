@@ -1,14 +1,15 @@
-import {ADD_NEW_CONTACTS} from "../actions/actionsType";
+import {CONTACTS_SUCCESS} from "../actions/actionsType";
 
 const initialState = {
-    contacts: null
+    contacts: {}
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_NEW_CONTACTS:
+        case CONTACTS_SUCCESS:
             return {
                 ...state,
+              contacts: action.contacts
             };
         default:
             return state;
