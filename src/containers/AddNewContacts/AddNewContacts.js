@@ -51,6 +51,10 @@ class AddNewContacts extends Component {
                 <div className="NewContactsFormBlock">
                     <h2>Add new Contacts</h2>
                     {form}
+
+                    <div className="ImgShowBlock">
+                        <img style={{width: '150px', height: '150px',}} src={this.state.photo} alt=""/>
+                    </div>
                     <div className="buttonBlock">
                         <button onClick={() => this.props.addContacts(this.state)}
                             style={{margin: '0 10px 0 0'}} className="btn btn-info">Add</button>

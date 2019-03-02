@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import './Contacts.css';
 import {connect} from "react-redux";
-import {getContacts} from "../../store/actions/action-contacts";
+import {deleteContacts, getContacts} from "../../store/actions/action-contacts";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 
@@ -9,7 +9,8 @@ class Contacts extends Component {
     state = {
         modal: false,
         contacts: {},
-        id: ''
+        ids: '',
+        index: ''
     };
 
     componentDidMount(){
@@ -21,32 +22,38 @@ class Contacts extends Component {
         this.props.history.push('/addNewContacts')
     };
 
-    toggle = (id, contact) => {
+    toggle = (index, contact, ids) => {
         this.setState({
-            id: id,
+            index: index,
+            ids: ids,
             contacts: contact,
             modal: true,
         })
     };
     toggleFalse = () => {
         this.setState({
-            modal: false,
+            modal: !this.state.modal,
         })
     };
 
+    openEdit = (id, event) => {
+        event.preventDefault();
+        this.props.history.push(`/edit/:${id}`)
+    };
+
     render() {
-        console.log(this.props.contacts);
+        console.log(this.state.ids);
         const CONTACTS = this.props.contacts;
-        const contactsInfo = Object.keys(CONTACTS).map((contactItem, index) => {
+        const contactsInfo = this.props.contacts ? Object.keys(CONTACTS).map((contactItem, index) => {
             return (
                 <Fragment key={contactItem}>
-                    <div onClick={() => this.toggle(CONTACTS[index], CONTACTS[contactItem])} className="ContactsItemDiv">
-                        <img style={{width: '150px', height: '150px', borderRadius: '10px'}} src={CONTACTS[contactItem].photo} alt=""/>
+                    <div onClick={() => this.toggle(CONTACTS[index], CONTACTS[contactItem], contactItem)} className="ContactsItemDiv">
+                        <img style={{width: '150px', height: '150px',}} src={CONTACTS[contactItem].photo} alt=""/>
                         <h3>{CONTACTS[contactItem].name}</h3>
                     </div>
                 </Fragment>
             )
-        });
+        }) : null;
 
         return (
             <div className="Contacts">
@@ -59,17 +66,17 @@ class Contacts extends Component {
                     {contactsInfo}
                 </div>
 
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                <Modal isOpen={this.state.modal} toggle={this.toggleFalse} className={this.props.className}>
                     <ModalHeader toggle={this.toggleFalse}>Modal title</ModalHeader>
                     <ModalBody>
                         <img style={{width: '300px', height: '300px'}} src={this.state.contacts.photo} alt=""/>
                         <h3>{this.state.contacts.name}</h3>
-                        <div>Phone: <a href="#">{this.state.contacts.phone}</a></div>
-                        <div>Email: <a href="#">{this.state.contacts.email}</a></div>
+                        <div>Phone:{this.state.contacts.phone}</div>
+                        <div>Email:{this.state.contacts.email}></div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.toggleFalse}>Edit</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleFalse}>Delete</Button>
+                        <Button color="primary" onClick={this.openEdit.bind(this, this.state.ids)}>Edit</Button>
+                        <Button color="secondary" onClick={this.props.deleteContacts.bind(this, this.state.ids)}>Delete</Button>
                     </ModalFooter>
                 </Modal>
             </div>
@@ -85,7 +92,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getContacts: () => dispatch(getContacts())
+        getContacts: () => dispatch(getContacts()),
+        deleteContacts: (id) => dispatch(deleteContacts(id))
     }
 };
 

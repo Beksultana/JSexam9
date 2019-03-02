@@ -17,3 +17,18 @@ export const getContacts = () => {
         })
     }
 };
+export const deleteContacts = id => {
+    return dispatch => {
+        dispatch(contactRequest());
+        axios.delete('contacts/' + id + '.json').then(() =>
+        dispatch(getContacts()))
+    }
+};
+
+export const editContacts = (id ,item) => {
+    return dispatch => {
+        dispatch(contactRequest());
+        axios.put(`contacts.json${id}`, item).then(response => {
+            console.log(response);})
+    }
+};
