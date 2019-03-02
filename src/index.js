@@ -5,14 +5,14 @@ import {createStore, applyMiddleware, combineReducers, compose} from 'redux';
 import {Provider} from 'react-redux'
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from "react-router-dom";
-import mainReducer from './store/reducers/root-reducer';
+import contactsReducer from './store/reducers/contacts-reducer';
 import thunkMiddleWare from 'redux-thunk';
 
 import './index.css';
 import App from "./App";
 
 const rootReducer = combineReducers({
-    mainReducer: mainReducer
+    contactsReducer: contactsReducer
 });
 
 const store = createStore(

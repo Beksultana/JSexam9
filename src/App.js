@@ -7,10 +7,13 @@ class App extends Component {
   render() {
     return (
         <Fragment>
-            <Layout/>
-          <Switch>
-              <Route path="/contacts" exact coponent={Contacts}/>
-          </Switch>
+            <Layout>
+              <div className="Container">
+                  <Switch>
+                      <Route path="/contacts" exact component={Contacts}/>
+                  </Switch>
+              </div>
+            </Layout>
         </Fragment>
     );
   }
